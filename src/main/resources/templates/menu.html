@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Battleships Online</title>
+
+</head>
+<body>
+
+<form th:action="@{/battleships/lobby}" method="POST">
+
+    <button type="submit" name="mode" th:value="singleplayer">Singleplayer</button><br>
+    <button type="submit" name="mode" th:value="multiplayer">Multiplayer</button>
+
+</form>
+
+
+
+</body>
+</html>
