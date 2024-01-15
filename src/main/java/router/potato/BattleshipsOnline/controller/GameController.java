@@ -7,6 +7,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import router.potato.BattleshipsOnline.model.Game;
+import router.potato.BattleshipsOnline.model.GameBoard;
 import router.potato.BattleshipsOnline.model.Player;
 import router.potato.BattleshipsOnline.service.GameService;
 
@@ -14,8 +15,12 @@ import router.potato.BattleshipsOnline.service.GameService;
 @RequestMapping("/battleships")
 public class GameController {
 
-    @Autowired
     private GameService gameService;
+
+    @Autowired
+    public GameController(GameService theGameService) {
+        gameService = theGameService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Game> createGame(@RequestBody Player player) {

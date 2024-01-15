@@ -13,7 +13,6 @@ function connectToSocket(gameId) {
     stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
         let data = JSON.parse(response.body);
         console.log(data);
-        refreshGameBoard(data);
         })
     })
 }
@@ -31,16 +30,14 @@ function createGame() {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify({
-                "player": {
                     "name": name
-                },
-                "gameId": gameId
             }),
             success: function (data) {
                 gameId = data.gameId;
                 playerType = 'FIRST_PLAYER';
                 connectToSocket(gameId);
-                alert("You created a game. game id is: " + data.gameId);
+                alert("You created a game. Game id is: " + data.gameId);
+                $('#gameId').replaceWith(data.gameId);
             },
             error: function (error) {
                 console.log(error);

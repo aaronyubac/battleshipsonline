@@ -1,11 +1,15 @@
 package router.potato.BattleshipsOnline.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 import router.potato.BattleshipsOnline.enumeration.GameState;
+
+import java.util.Arrays;
 
 @Component
 public class Game {
 
+    @Id
     private String gameId;
     private GameBoard[] gameBoards;
     private Player player1;
@@ -72,5 +76,18 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId='" + gameId + '\'' +
+                ", gameBoards=" + Arrays.toString(gameBoards) +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                ", winner='" + winner + '\'' +
+                ", turn='" + turn + '\'' +
+                ", gameState=" + gameState +
+                '}';
     }
 }
