@@ -19,7 +19,6 @@ public class GameService {
         gameRepository = theGameRepository;
     }
 
-    @Autowired
     public Game createGame(Player player) {
         Game game = new Game();
         game.setGameId(UUID.randomUUID().toString());
@@ -27,6 +26,22 @@ public class GameService {
         gameRepository.save(game);
 
         return game;
+    }
+
+    public Game connectToGame(Player player, String gameId) {
+        Optional<Game> optionalGame = gameRepository.findById(gameId);
+
+        optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist")); // create game exception
+        Game game = optionalGame.get();
+
+        if (game.getPlayer2() != null) {
+            throw new RuntimeException("Game is full");
+        }
+
+        game.setPlayer2(player);
+        gameRepository.save(game);
+        return game;
+
     }
 
 }

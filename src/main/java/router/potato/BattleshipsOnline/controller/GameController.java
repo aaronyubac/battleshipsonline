@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import router.potato.BattleshipsOnline.dto.ConnectRequest;
 import router.potato.BattleshipsOnline.model.Game;
 import router.potato.BattleshipsOnline.model.GameBoard;
 import router.potato.BattleshipsOnline.model.Player;
@@ -26,6 +27,15 @@ public class GameController {
     public ResponseEntity<Game> createGame(@RequestBody Player player) {
         System.out.println("create game request: " + player);
         return ResponseEntity.ok(gameService.createGame(player));
+
+    }
+
+    @PostMapping("/connect")
+    public ResponseEntity<Game> createGame(@RequestBody ConnectRequest connectRequest) {
+        System.out.println("connect request: " + connectRequest);
+        System.out.println("Player: " + connectRequest.getPlayer());
+        System.out.println("Game Id: " + connectRequest.getGameId());
+        return ResponseEntity.ok(gameService.connectToGame(connectRequest.getPlayer(), connectRequest.getGameId()));
 
     }
 

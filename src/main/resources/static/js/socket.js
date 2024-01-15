@@ -37,12 +37,52 @@ function createGame() {
                 playerType = 'FIRST_PLAYER';
                 connectToSocket(gameId);
                 alert("You created a game. Game id is: " + data.gameId);
-                $('#gameId').replaceWith(data.gameId);
+                $('#gameIdFinal').replaceWith(data.gameId);
+                $('#playerOne').replaceWith(data.player1.name);
             },
             error: function (error) {
                 console.log(error);
             }
         })
+    }
+}
+
+document.getElementById("joinGameBtn").addEventListener("click", connectToGame);
+
+function connectToGame() {
+    let name = document.getElementById("name").value;
+    if (name == null || name === '') {
+        alert("Please enter name");
+    } else {
+        let gameId = document.getElementById("gameId").value;
+        if (gameId == null || gameId === '') {
+            alert("Please enter game id");
+        }
+
+      $.ajax({
+        url: url + "/battleships/connect",
+        type: 'POST',
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+            "player": {
+                "name": name
+            },
+            "gameId": gameId
+        }),
+      success: function(data) {
+        gameId = data.gameId;
+        playerType = 'SECOND_PLAYER';
+        connectToSocket(gameId);
+        alert("You are now playing with: " + data.player1.name);
+        $('#gameIdFinal').replaceWith(data.gameId);
+        $('#playerOne').replaceWith(data.player1.name);
+        $('#playerTwo').replaceWith(data.player2.name);
+      },
+      error: function (error) {
+                      console.log(error);
+                  }
+      })
     }
 }
 
