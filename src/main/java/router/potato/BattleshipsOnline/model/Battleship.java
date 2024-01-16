@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public class Battleship {
 
-    ArrayList<Point> body;
-    Boolean[] hits;
+    public ArrayList<Point> body;
+    public Boolean[] hits;
     char direction;
 
     public Battleship(ArrayList<Point> body, char direction) {

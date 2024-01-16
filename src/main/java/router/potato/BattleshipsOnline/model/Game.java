@@ -4,7 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 import router.potato.BattleshipsOnline.enumeration.GameState;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class Game {
@@ -15,11 +17,11 @@ public class Game {
     private Player player1;
     private Player player2;
     private String winner;
-    private String turn;
+    private int turn;
     private GameState gameState;
 
     public Game() {
-
+        this.gameBoards = new GameBoard[]{new GameBoard(), new GameBoard()};
     }
 
     public String getGameId() {
@@ -62,11 +64,11 @@ public class Game {
         this.winner = winner;
     }
 
-    public String getTurn() {
+    public int getTurn() {
         return turn;
     }
 
-    public void setTurn(String turn) {
+    public void setTurn(int turn) {
         this.turn = turn;
     }
 
@@ -82,11 +84,11 @@ public class Game {
     public String toString() {
         return "Game{" +
                 "gameId='" + gameId + '\'' +
-                ", gameBoards=" + Arrays.toString(gameBoards) +
+                ", gameBoards=" + gameBoards +
                 ", player1=" + player1 +
                 ", player2=" + player2 +
                 ", winner='" + winner + '\'' +
-                ", turn='" + turn + '\'' +
+                ", turn=" + turn +
                 ", gameState=" + gameState +
                 '}';
     }

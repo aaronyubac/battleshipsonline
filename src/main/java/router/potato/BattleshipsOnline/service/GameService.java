@@ -2,10 +2,12 @@ package router.potato.BattleshipsOnline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import router.potato.BattleshipsOnline.model.Game;
-import router.potato.BattleshipsOnline.model.Player;
+import router.potato.BattleshipsOnline.dto.PlaceBattleshipRequest;
+import router.potato.BattleshipsOnline.model.*;
 import router.potato.BattleshipsOnline.repository.GameRepository;
 
+import java.awt.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,16 +15,23 @@ import java.util.UUID;
 public class GameService {
 
     private final GameRepository gameRepository;
+    private final ShotService shotService;
+    private final ShipService shipService;
 
     @Autowired
-    public GameService(GameRepository theGameRepository) {
+    public GameService(GameRepository theGameRepository, ShotService theShotService, ShipService theShipService) {
         gameRepository = theGameRepository;
+        shotService = theShotService;
+        shipService = theShipService;
     }
 
     public Game createGame(Player player) {
         Game game = new Game();
         game.setGameId(UUID.randomUUID().toString());
         game.setPlayer1(player);
+
+
+
         gameRepository.save(game);
 
         return game;
@@ -42,6 +51,35 @@ public class GameService {
         gameRepository.save(game);
         return game;
 
+    }
+
+    public Game placeShips(PlaceBattleshipRequest placeRequest) {
+
+        Optional<Game> optionalGame = gameRepository.findById(placeRequest.getGameId());
+
+        optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
+        Game game = optionalGame.get();
+
+
+
+        Game gameShipsPlaced = shipService.placeShips(game, placeRequest);
+        gameRepository.save(gameShipsPlaced);
+
+        return gameShipsPlaced;
+    }
+
+    public Game shoot(Shot shot) {
+        Optional<Game> optionalGame = gameRepository.findById(shot.getGameId());
+
+        optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
+        Game game = optionalGame.get();
+
+
+
+        Game gamePostShot = shotService.shoot(game, shot.getLocation());
+        gameRepository.save(gamePostShot);
+
+        return gamePostShot;
     }
 
 }

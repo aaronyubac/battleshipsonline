@@ -24,6 +24,7 @@ function createGame() {
     if (name == null || name === '') {
         alert("Please enter name");
     } else {
+
         $.ajax({
             url: url + "/battleships/create",
             type: 'POST',
@@ -39,6 +40,7 @@ function createGame() {
                 alert("You created a game. Game id is: " + data.gameId);
                 $('#gameIdFinal').replaceWith(data.gameId);
                 $('#playerOne').replaceWith(data.player1.name);
+                $('#playerTwo').replaceWith(data.player2.name);
             },
             error: function (error) {
                 console.log(error);
@@ -54,8 +56,8 @@ function connectToGame() {
     if (name == null || name === '') {
         alert("Please enter name");
     } else {
-        let gameId = document.getElementById("gameId").value;
-        if (gameId == null || gameId === '') {
+        let gameIdInput = document.getElementById("gameId").value;
+        if (gameIdInput == null || gameIdInput === '') {
             alert("Please enter game id");
         }
 
@@ -66,22 +68,22 @@ function connectToGame() {
         contentType: "application/json",
         data: JSON.stringify({
             "player": {
-                "name": name
+                "name": name,
             },
-            "gameId": gameId
+            "gameId": gameIdInput
         }),
-      success: function(data) {
-        gameId = data.gameId;
-        playerType = 'SECOND_PLAYER';
-        connectToSocket(gameId);
-        alert("You are now playing with: " + data.player1.name);
-        $('#gameIdFinal').replaceWith(data.gameId);
-        $('#playerOne').replaceWith(data.player1.name);
-        $('#playerTwo').replaceWith(data.player2.name);
-      },
+        success: function(data) {
+            gameId = data.gameId;
+            playerType = 'SECOND_PLAYER';
+            connectToSocket(gameId);
+            alert("You are now playing with: " + data.player1.name);
+            $('#gameIdFinal').replaceWith(data.gameId);
+            $('#playerOne').replaceWith(data.player1.name);
+            $('#playerTwo').replaceWith(data.player2.name);
+        },
       error: function (error) {
-                      console.log(error);
-                  }
+        console.log(error);
+        }
       })
     }
 }

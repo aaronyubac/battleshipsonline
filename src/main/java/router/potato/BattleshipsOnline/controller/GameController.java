@@ -7,16 +7,21 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import router.potato.BattleshipsOnline.dto.ConnectRequest;
+import router.potato.BattleshipsOnline.dto.PlaceBattleshipRequest;
+import router.potato.BattleshipsOnline.model.Battleship;
 import router.potato.BattleshipsOnline.model.Game;
 import router.potato.BattleshipsOnline.model.GameBoard;
 import router.potato.BattleshipsOnline.model.Player;
 import router.potato.BattleshipsOnline.service.GameService;
+import router.potato.BattleshipsOnline.service.ShipService;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/battleships")
 public class GameController {
 
-    private GameService gameService;
+    private final GameService gameService;
 
     @Autowired
     public GameController(GameService theGameService) {
@@ -37,6 +42,12 @@ public class GameController {
         System.out.println("Game Id: " + connectRequest.getGameId());
         return ResponseEntity.ok(gameService.connectToGame(connectRequest.getPlayer(), connectRequest.getGameId()));
 
+    }
+
+    @PostMapping("/place")
+    public ResponseEntity<Game> placeShips(@RequestBody PlaceBattleshipRequest placeRequest) {
+
+        return ResponseEntity.ok(gameService.placeShips(placeRequest));
     }
 
 }
