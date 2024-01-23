@@ -1,48 +1,47 @@
 package router.potato.BattleshipsOnline.dto;
 
-import router.potato.BattleshipsOnline.model.Battleship;
-
 import java.awt.*;
 
 public class PlaceBattleshipRequest {
 
-    Point head;
-    char direction;
-    int length;
+    Point[] heads;
+    Point[] tails;
+    boolean[] isVerticals;
     String playerType;
     String gameId;
 
 
-    public PlaceBattleshipRequest(Point head, char direction, int length, String playerType, String gameId) {
-        this.head = head;
-        this.direction = direction;
-        this.length = length;
+    public PlaceBattleshipRequest(Point[] heads, Point[] tails, boolean[] isVerticals,
+                                  String playerType, String gameId) {
+        this.heads = heads;
+        this.tails = tails;
+        this.isVerticals = isVerticals;
         this.playerType = playerType;
         this.gameId = gameId;
     }
 
-    public Point getHead() {
-        return head;
+    public Point[] getHeads() {
+        return heads;
     }
 
-    public void setHead(Point head) {
-        this.head = head;
+    public void setHeads(Point[] heads) {
+        this.heads = heads;
     }
 
-    public char getDirection() {
-        return direction;
+    public Point[] getTails() {
+        return tails;
     }
 
-    public void setDirection(char direction) {
-        this.direction = direction;
+    public void setTails(Point[] tails) {
+        this.tails = tails;
     }
 
-    public int getLength() {
-        return length;
+    public boolean[] getIsVerticals() {
+        return isVerticals;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setIsVerticals(boolean[] isVerticals) {
+        this.isVerticals = isVerticals;
     }
 
     public String getPlayerType() {

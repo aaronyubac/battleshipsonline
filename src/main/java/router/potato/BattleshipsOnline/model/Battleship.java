@@ -8,32 +8,32 @@ public class Battleship {
 
     public ArrayList<Point> body;
     public Boolean[] hits;
-    char direction;
 
-    public Battleship(ArrayList<Point> body, char direction) {
+    public Battleship() {
+    }
+
+    public Battleship(ArrayList<Point> body) {
         this.body = body;
         this.hits = new Boolean[this.body.size()];
-        this.direction = direction;
 
         Arrays.fill(hits, Boolean.FALSE);
     }
 
-    public static Battleship build(Point head, int length, char direction) {
+    public static Battleship build(Point head, Point tail, boolean isVertical) {
 
-        ArrayList<Point> body = new ArrayList<>(length);
+        int length = (isVertical) ? (tail.y - head.y) + 1 : (tail.x - head.x) + 1;
+        ArrayList<Point> body = new ArrayList<>(5);
         Point el = null;
 
         for (int i = 0; i < length; i++) {
-            el = switch (direction) {
-                case 'N' -> new Point(head.x, head.y - i);
-                case 'S' -> new Point(head.x, head.y + i);
-                case 'W' -> new Point(head.x - i, head.y);
-                case 'E' -> new Point(head.x + i, head.y);
-                default -> el;
-            };
+            if (isVertical) {
+                el = new Point(head.x, head.y + i);
+            } else {
+                el = new Point(head.x + i, head.y);
+            }
             body.add(el);
         }
-        return new Battleship(body, direction);
+        return new Battleship(body);
     }
 
     public boolean isDestroyed() {

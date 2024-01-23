@@ -1,54 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Battleships</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
 
-</head>
+  <body>
+    <h3>Lobby</h3>
 
+    <input id="name" placeholder="Place a name here" />
+    <input id="gameId" placeholder="Game Id here" />
+    <br />
+    <button id="createNewGameBtn">Create a new game</button>
+    <br />
+    <button id="joinGameBtn">Join Game</button>
 
-<body>
+    <br /><br />
 
-<h3>Lobby</h3>
+    <div id="gameIdContainer">Game Id: <span id="gameIdFinal">Not Connected: </span></div>
 
-<input id="name" placeholder="Place a name here">
-<input id="gameId" placeholder="Game Id here">
-<br>
-<button id="createNewGameBtn">Create a new game</button>
-<br>
-<button id="joinGameBtn">Join Game</button>
+    <br /><br />
 
-<br><br>
+    <div id="playerOneContainer">
+      Player One: <span id="playerOne">Empty</span>
+    </div>
+    <br />
+    <div id="playerTwoContainer">
+      Player Two: <span id="playerTwo">Empty</span>
+    </div>
 
-<span id="gameIdContainer">Game Id: <span id="gameIdFinal">Not Connected: </span></span>
+    <br><br><br>
 
-<br><br>
-
-<span id="playerOneContainer">Player One: <span id="playerOne">Empty</span></span>
-<br>
-<span id="playerTwoContainer">Player Two: <span id="playerTwo">Empty</span></span>
-
-<br><br><br><br><br>
-
-<input id="x" placeholder="x">
-<input id="y" placeholder="y">
-<input id="dir" placeholder="direction">
-
-<!--<input id="x1" placeholder="x1">-->
-<!--<input id="y1" placeholder="y1">-->
-<!--<input id="dir1" placeholder="direction1">-->
-
-<button id="placeBattleshipsBtn">Place Battleships</button>
+    <input id="x" placeholder="x" />
+    <input id="y" placeholder="y" />
+    <input id="dir" placeholder="direction" />
+    <button id="confirmBattleshipsBtn">Confirm Battleships</button>
 
 
+    <div id="gameContainer">
+      <div id="playerBoard" class="board">
+      </div>
 
+      <div class="ships-container">
 
+        <div class="ship destroyer-container" draggable="true">
+          <div id="destroyer-0"></div>
+          <div id="destroyer-1"></div>
+        </div>
 
-<script src="/js/socket.js"></script>
-<script src="/js/script.js"></script>
-</body>
+        <div class="ship submarine-container" draggable="true">
+          <div id="submarine-0"></div>
+          <div id="submarine-1"></div>
+          <div id="submarine-2"></div>
+        </div>
+
+        <div class="ship cruiser-container" draggable="true">
+          <div id="cruiser-0"></div>
+          <div id="cruiser-1"></div>
+          <div id="cruiser-2"></div>
+        </div>
+
+        <div class="ship battleship-container" draggable="true">
+          <div id="battleship-0"></div>
+          <div id="battleship-1"></div>
+          <div id="battleship-2"></div>
+          <div id="battleship-3"></div>
+        </div>
+
+        <div class="ship carrier-container" draggable="true">
+          <div id="carrier-0"></div>
+          <div id="carrier-1"></div>
+          <div id="carrier-2"></div>
+          <div id="carrier-3"></div>
+          <div id="carrier-4"></div>
+        </div>
+
+      </div>
+
+      <div id="enemyBoard" class="board"></div>
+    </div>
+
+    <script src="/js/socket.js"></script>
+    <script src="/js/PlayerBoard.js"></script>
+  </body>
 </html>

@@ -30,8 +30,6 @@ public class GameService {
         game.setGameId(UUID.randomUUID().toString());
         game.setPlayer1(player);
 
-
-
         gameRepository.save(game);
 
         return game;
@@ -59,8 +57,6 @@ public class GameService {
 
         optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
         Game game = optionalGame.get();
-
-
 
         Game gameShipsPlaced = shipService.placeShips(game, placeRequest);
         gameRepository.save(gameShipsPlaced);

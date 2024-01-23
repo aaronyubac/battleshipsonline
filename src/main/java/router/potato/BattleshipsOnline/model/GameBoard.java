@@ -2,6 +2,7 @@ package router.potato.BattleshipsOnline.model;
 
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class GameBoard {
     public GameBoard() {
         board = new char[length][width];
         for (char[] row : board) {
-            Arrays.fill(row, '-');
+            Arrays.fill(row, '0');
         }
 
     }
@@ -39,7 +40,6 @@ public class GameBoard {
 
         return hitBattleship;
     }
-
 
 
     public Battleship[] getBattleships() {

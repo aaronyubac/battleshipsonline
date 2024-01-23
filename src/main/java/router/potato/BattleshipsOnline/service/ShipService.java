@@ -14,17 +14,13 @@ public class ShipService {
 
     public Game placeShips(Game game, PlaceBattleshipRequest placeRequest) {
 
-        // get gameboard
+        GameBoard gameBoard = (placeRequest.getPlayerType().equals("FIRST_PLAYER")) ?
+                game.getGameBoards()[0] : game.getGameBoards()[1];
 
-        System.out.println(game.getGameBoards()[0]);
-        System.out.println(game.getGameBoards()[1]);
-
-        GameBoard gameBoard = (placeRequest.getPlayerType().equals("FIRST_PLAYER")) ? game.getGameBoards()[0]
-                : game.getGameBoards()[1];
-
-        // set battleships on board
-        Battleship battleship = Battleship.build(placeRequest.getHead(), placeRequest.getLength(), placeRequest.getDirection());
-        Battleship[] battleships = {battleship};
+        Battleship[] battleships = new Battleship[5];
+        for (int i = 0; i < battleships.length; i++) {
+            battleships[i] = Battleship.build(placeRequest.getHeads()[i], placeRequest.getTails()[i], placeRequest.getIsVerticals()[i]);
+        }
 
         gameBoard.setBattleships(battleships);
 

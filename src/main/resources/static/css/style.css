@@ -1,0 +1,112 @@
+#gameContainer {
+    display: grid;
+    grid-template-columns: 30% 20% 30%;
+    justify-content: center;
+    }
+.board {
+     display: grid;
+     height: 80%;
+     grid-template-columns: repeat(10, 10%);
+     box-shadow: 10px 10px 20px black;
+    }
+.square {
+      aspect-ratio: 1/ 1;
+      display: flex;
+      align-items: center;
+      background-color: #0096C7;
+      border-style: solid;
+      border-color: black;
+      color: #fff;
+}
+
+.ship{
+    background-color: whitesmoke;
+}
+
+.ship div{
+    width: 40px;
+    border-style: solid;
+    border-color: black;
+}
+
+.ships-container{
+    background-color: slateblue;
+    height: 80%;
+    margin: 20px;
+}
+
+.destroyer-container{
+    width: 80px;
+    height: 40px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+}
+.destroyer-container-vertical{
+    width: 40px;
+    height: 80px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+.submarine-container{
+    width: 120px;
+    height: 40px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+}
+.submarine-container-vertical{
+    width: 40px;
+    height: 120px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+.cruiser-container{
+    width: 120px;
+    height: 40px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+}
+.cruiser-container-vertical{
+    width: 40px;
+    height: 120px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+.battleship-container{
+    width: 160px;
+    height: 40px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+}
+.battleship-container-vertical{
+    width: 40px;
+    height: 160px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+.carrier-container{
+    width: 200px;
+    height: 40px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+}
+.carrier-container-vertical{
+    width: 40px;
+    height: 200px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
