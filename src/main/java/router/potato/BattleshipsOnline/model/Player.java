@@ -8,6 +8,7 @@ import java.util.function.Function;
 public class Player {
 
     String name;
+    boolean isReady = false;
 
 
     public Player() {
@@ -23,6 +24,14 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public void setReady(boolean ready) {
+        isReady = ready;
     }
 
     @Override

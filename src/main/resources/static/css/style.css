@@ -1,18 +1,24 @@
 #gameContainer {
+    width: 70%;
+    margin: auto;
     display: grid;
-    grid-template-columns: 30% 20% 30%;
+    grid-template-columns: 2fr 1fr 2fr;
     justify-content: center;
+
     }
+#confirmBattleshipsBtn {
+    visibility: hidden;
+}
 .board {
+     width 400px;
+     height: 400px;
      display: grid;
-     height: 80%;
-     grid-template-columns: repeat(10, 10%);
-     box-shadow: 10px 10px 20px black;
+     grid-template-columns: repeat(10, 40px);
+     justify-content: center;
     }
 .square {
-      aspect-ratio: 1/ 1;
-      display: flex;
-      align-items: center;
+      width 40px;
+      height 40px;
       background-color: #0096C7;
       border-style: solid;
       border-color: black;
@@ -25,13 +31,15 @@
 
 .ship div{
     width: 40px;
+    height: 40px;
     border-style: solid;
     border-color: black;
 }
 
 .ships-container{
     background-color: slateblue;
-    height: 80%;
+    min-width 300px;
+    height: 400px;
     margin: 20px;
 }
 

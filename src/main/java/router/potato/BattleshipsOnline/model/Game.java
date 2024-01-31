@@ -22,6 +22,7 @@ public class Game {
 
     public Game() {
         this.gameBoards = new GameBoard[]{new GameBoard(), new GameBoard()};
+        this.turn = 0;
     }
 
     public String getGameId() {

@@ -38,9 +38,8 @@ function createGame() {
                 playerType = 'FIRST_PLAYER';
                 connectToSocket(gameId);
                 alert("You created a game. Game id is: " + data.gameId);
-                $('#gameIdFinal').replaceWith(data.gameId);
-                $('#playerOne').replaceWith(data.player1.name);
-                $('#playerTwo').replaceWith(data.player2.name);
+                console.log(data);
+                refreshGameBoard(data);
             },
             error: function (error) {
                 console.log(error);
@@ -77,9 +76,7 @@ function connectToGame() {
             playerType = 'SECOND_PLAYER';
             connectToSocket(gameId);
             alert("You are now playing with: " + data.player1.name);
-            $('#gameIdFinal').replaceWith(data.gameId);
-            $('#playerOne').replaceWith(data.player1.name);
-            $('#playerTwo').replaceWith(data.player2.name);
+            refreshGameBoard(data);
         },
       error: function (error) {
         console.log(error);

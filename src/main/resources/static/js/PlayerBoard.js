@@ -1,5 +1,7 @@
 var width = 10;
-var squares = new Array();
+var playerSquares = new Array();
+var enemySquares = new Array();
+
 
 const shipsArray = [
     {
@@ -42,8 +44,10 @@ const shipsArray = [
 document.addEventListener("DOMContentLoaded", () => {
     const ships = document.querySelectorAll('.ship');
     const shipsContainer = document.querySelector(".ships-container");
-    playerBoard = document.getElementById('playerBoard')
+    playerBoard = document.getElementById('playerBoard');
+    enemyBoard = document.getElementById('enemyBoard');
     renderBoard(playerBoard);
+    renderBoard(enemyBoard);
 
 shipsContainer.addEventListener('click', e => {
     if(e.target.parentElement.matches('div.ship')) {
@@ -59,11 +63,9 @@ shipsContainer.addEventListener('click', e => {
         playerBoard.addEventListener('dragover', dragOver);
         playerBoard.addEventListener('dragenter', dragEnter);
         playerBoard.addEventListener('dragleave', dragLeave);
-    playerBoard.addEventListener('drop', e => {
-        console.log("dropped ship");
-        placeShip(e, target, shipsContainer);
-        });
+        playerBoard.addEventListener('drop', e => {placeShip(e, target, shipsContainer)});
     document.getElementById("confirmBattleshipsBtn").addEventListener("click", confirmShips);
+    document.getElementById("resetBtn").addEventListener("click", e => reset(e, shipsContainer));
 });
 
 function renderBoard(board) {
@@ -72,7 +74,7 @@ function renderBoard(board) {
         square.classList.add('square');
         square.dataset.id = i;
         board.appendChild(square);
-        squares.push(square);
+        playerSquares.push(square);
     }
 }
 
@@ -82,20 +84,15 @@ function renderBoard(board) {
         shipLength: 0
     }
 
-
-
-
 function rotate(ship){
     console.log(ship)
     console.log(ship.classList[1])
     ship.classList.toggle(`${ship.classList[1]}-vertical`)
 }
 
-
 function grabShip(e, target) {
     target['shipNameWithId'] = e.target.id;
 }
-
 
 function dragStart(e, target){
     target['ship'] = e.target;
@@ -111,15 +108,14 @@ function placeShip(e, target, container) {
     let droppedShipFirstId = receivingSquare - draggedShipIndex;
     let droppedShipLastId = receivingSquare + draggedShipLastIndex - draggedShipIndex;
 
-    // add data to div droppedShipFirstId and droppedShipLastId
-
-//    console.log("draggedShipWithLastId: " + draggedShipWithLastId);
-//    console.log("draggedShipClass: " + draggedShipClass);
-//    console.log("draggedShipLastIndex: " + draggedShipLastIndex);
-//    console.log("draggedShipIndex: " + draggedShipIndex);
-//    console.log("receivingSquare: " + receivingSquare);
-//    console.log("droppedShipFirstId: " + droppedShipFirstId);
-//    console.log("droppedShipLastId: " + droppedShipLastId);
+console.log(target);
+    console.log("draggedShipWithLastId: " + draggedShipWithLastId);
+    console.log("draggedShipClass: " + draggedShipClass);
+    console.log("draggedShipLastIndex: " + draggedShipLastIndex);
+    console.log("draggedShipIndex: " + draggedShipIndex);
+    console.log("receivingSquare: " + receivingSquare);
+    console.log("droppedShipFirstId: " + droppedShipFirstId);
+    console.log("droppedShipLastId: " + droppedShipLastId);
 
     let isVertical = [...target.ship.classList].some(className => className.includes('vertical'));
 
@@ -127,11 +123,11 @@ function placeShip(e, target, container) {
 
     if (!isVertical) {
         let current = shipsArray.find(ship => ship.name === draggedShipClass).directions.horizontal;
-        let isTaken = current.some(index => squares[droppedShipFirstId + index].classList.contains('taken'));
+        let isTaken = current.some(index => playerSquares[droppedShipFirstId + index].classList.contains('taken'));
 
         if(Math.floor(droppedShipLastId/10) === Math.floor(receivingSquare/10) && !isTaken){
             for(let i = 0; i < target.shipLength; i++){
-                squares[receivingSquare - draggedShipIndex + i].classList.add(
+                playerSquares[receivingSquare - draggedShipIndex + i].classList.add(
                     'taken', draggedShipClass, 'ship');
                 }
                 container.removeChild(target.ship);
@@ -140,11 +136,11 @@ function placeShip(e, target, container) {
             }
     } else {
         let current = shipsArray.find(ship => ship.name === draggedShipClass).directions.vertical;
-        let isTaken = current.some(index => squares[droppedShipFirstId + index].classList.contains('taken'));
+        let isTaken = current.some(index => playerSquares[droppedShipFirstId + index].classList.contains('taken'));
 
         if(receivingSquare + (target.shipLength - 1) * 10 < 100 && !isTaken){
             for(let i = 0; i < target.shipLength; i++){
-                squares[receivingSquare - draggedShipIndex + (10 * i)].classList.add(
+                playerSquares[receivingSquare + (10 * (i-draggedShipIndex))].classList.add(
                     'taken', draggedShipClass, 'ship');
                 }
                 container.removeChild(target.ship);
@@ -156,7 +152,9 @@ function placeShip(e, target, container) {
     $("." + draggedShipClass).first().data("tail", droppedShipLastId);
     $("." + draggedShipClass).first().data("isVertical", isVertical);
 
-    if(!container.querySelector('.ship')) allShipsInPlace = true;
+    if(!container.querySelector('.ship')) {
+        document.getElementById("confirmBattleshipsBtn").style.visibility = "visible";
+    }
     }
 function dragOver(e){
     e.preventDefault();
@@ -169,7 +167,6 @@ function dragLeave(){
 }
 
 function confirmShips() {
-    // send over data of ships
 
     let heads = new Array();
     let tails = new Array();
@@ -207,7 +204,11 @@ function confirmShips() {
                     "gameId": gameId
             }),
             success: function(data) {
-                console.log(data.gameBoards);
+                console.log(data);
+                if (data.player1.ready && data.player2.ready) {
+//                    start game
+                }
+                refreshGameBoard(data);
             },
             error: function(error) {
                 console.log(error);
@@ -215,4 +216,55 @@ function confirmShips() {
         });
 
 }
+
+function reset (e,shipsContainer) {
+
+    playerSquares.forEach(square => {
+        if(square.classList.contains('taken')){
+            square.className = 'square';
+        }
+    })
+
+        shipsContainer.innerHTML = `
+       <div class="ship destroyer-container" draggable="true">
+          <div id="destroyer-0"></div>
+          <div id="destroyer-1"></div>
+        </div>
+
+        <div class="ship submarine-container" draggable="true">
+          <div id="submarine-0"></div>
+          <div id="submarine-1"></div>
+          <div id="submarine-2"></div>
+        </div>
+
+        <div class="ship cruiser-container" draggable="true">
+          <div id="cruiser-0"></div>
+          <div id="cruiser-1"></div>
+          <div id="cruiser-2"></div>
+        </div>
+
+        <div class="ship battleship-container" draggable="true">
+          <div id="battleship-0"></div>
+          <div id="battleship-1"></div>
+          <div id="battleship-2"></div>
+          <div id="battleship-3"></div>
+        </div>
+
+        <div class="ship carrier-container" draggable="true">
+          <div id="carrier-0"></div>
+          <div id="carrier-1"></div>
+          <div id="carrier-2"></div>
+          <div id="carrier-3"></div>
+          <div id="carrier-4"></div>
+        </div>`;
+
+        ships = document.querySelectorAll('.ship');
+        ships.forEach(ship => ship.addEventListener('dragstart', e => {dragStart(e, target)}));
+
+
+}
+
+// when both ships confirmed player 1 can take shot (ready functionality)
+// have take shot button gray out when its not their turn or no square selected
+
 

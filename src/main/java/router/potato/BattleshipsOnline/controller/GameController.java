@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import router.potato.BattleshipsOnline.dto.ConnectRequest;
 import router.potato.BattleshipsOnline.dto.PlaceBattleshipRequest;
-import router.potato.BattleshipsOnline.model.Battleship;
-import router.potato.BattleshipsOnline.model.Game;
-import router.potato.BattleshipsOnline.model.GameBoard;
-import router.potato.BattleshipsOnline.model.Player;
+import router.potato.BattleshipsOnline.model.*;
 import router.potato.BattleshipsOnline.service.GameService;
 import router.potato.BattleshipsOnline.service.ShipService;
 
@@ -48,6 +45,12 @@ public class GameController {
     public ResponseEntity<Game> placeShips(@RequestBody PlaceBattleshipRequest placeRequest) {
 
         return ResponseEntity.ok(gameService.placeShips(placeRequest));
+    }
+
+    @PostMapping("/shoot")
+    public ResponseEntity<Game> shoot(@RequestBody Shot shot) {
+
+        return ResponseEntity.ok(gameService.shoot(shot));
     }
 
 }

@@ -16,9 +16,7 @@ public class ShotService {
 
         Shot shot = takeShot(game, shotLocation);
 
-        if (isGameOver(game)) {
-            return game;
-        }
+        isGameOver(game);
 
         return game;
 

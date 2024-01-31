@@ -34,12 +34,12 @@
       Player Two: <span id="playerTwo">Empty</span>
     </div>
 
-    <br><br><br>
+    <br><br>
 
-    <input id="x" placeholder="x" />
-    <input id="y" placeholder="y" />
-    <input id="dir" placeholder="direction" />
+    <button id="resetBtn">Reset Ships</button>
     <button id="confirmBattleshipsBtn">Confirm Battleships</button>
+    <br>
+    <div id="turnDisplayContainer">It's <span id="turnDisplay"><!-- UPDATE PLAYER --></span>'s turn</div>
 
 
     <div id="gameContainer">
@@ -86,6 +86,7 @@
     </div>
 
     <script src="/js/socket.js"></script>
+    <script src="/js/script.js"></script>
     <script src="/js/PlayerBoard.js"></script>
   </body>
 </html>
