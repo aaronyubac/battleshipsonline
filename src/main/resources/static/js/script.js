@@ -14,3 +14,7 @@ function refreshGameBoard(data) {
 // game state
     // if game state is done show winner
 }
+
+function takeShot() {
+
+}

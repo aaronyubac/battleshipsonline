@@ -41,11 +41,11 @@ public class GameService {
         optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist")); // create game exception
         Game game = optionalGame.get();
 
-        if (game.getPlayer2() != null) {
+        if (game.getPlayers()[1] != null) {
             throw new RuntimeException("Game is full");
         }
 
-        game.setPlayer2(player);
+        game.getPlayers()[1] = player;
         gameRepository.save(game);
         return game;
 
@@ -60,9 +60,9 @@ public class GameService {
 
         Game gameShipsPlaced = shipService.placeShips(game, placeRequest);
         if (placeRequest.getPlayerType().equals("FIRST_PLAYER")) {
-            game.getPlayer1().setReady(true);
+            game.getPlayers()[0].setReady(true);
         } else {
-            game.getPlayer2().setReady(true);
+            game.getPlayers()[1].setReady(true);
         }
         gameRepository.save(gameShipsPlaced);
 
@@ -75,7 +75,7 @@ public class GameService {
         optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
         Game game = optionalGame.get();
 
-        Game gamePostShot = shotService.shoot(game, shot.getLocation());
+        Game gamePostShot = shotService.takeShot(game, shot.getLocation());
         gameRepository.save(gamePostShot);
 
         return gamePostShot;

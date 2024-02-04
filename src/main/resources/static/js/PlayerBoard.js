@@ -108,18 +108,16 @@ function placeShip(e, target, container) {
     let droppedShipFirstId = receivingSquare - draggedShipIndex;
     let droppedShipLastId = receivingSquare + draggedShipLastIndex - draggedShipIndex;
 
-console.log(target);
-    console.log("draggedShipWithLastId: " + draggedShipWithLastId);
-    console.log("draggedShipClass: " + draggedShipClass);
-    console.log("draggedShipLastIndex: " + draggedShipLastIndex);
-    console.log("draggedShipIndex: " + draggedShipIndex);
-    console.log("receivingSquare: " + receivingSquare);
-    console.log("droppedShipFirstId: " + droppedShipFirstId);
-    console.log("droppedShipLastId: " + droppedShipLastId);
+//console.log(target);
+//    console.log("draggedShipWithLastId: " + draggedShipWithLastId);
+//    console.log("draggedShipClass: " + draggedShipClass);
+//    console.log("draggedShipLastIndex: " + draggedShipLastIndex);
+//    console.log("draggedShipIndex: " + draggedShipIndex);
+//    console.log("receivingSquare: " + receivingSquare);
+//    console.log("droppedShipFirstId: " + droppedShipFirstId);
+//    console.log("droppedShipLastId: " + droppedShipLastId);
 
     let isVertical = [...target.ship.classList].some(className => className.includes('vertical'));
-
-
 
     if (!isVertical) {
         let current = shipsArray.find(ship => ship.name === draggedShipClass).directions.horizontal;
@@ -206,7 +204,7 @@ function confirmShips() {
             success: function(data) {
                 console.log(data);
                 if (data.player1.ready && data.player2.ready) {
-//                    start game
+                    startGame(data);
                 }
                 refreshGameBoard(data);
             },
@@ -265,6 +263,9 @@ function reset (e,shipsContainer) {
 }
 
 // when both ships confirmed player 1 can take shot (ready functionality)
+function startGame(data) {
+    
+}
 // have take shot button gray out when its not their turn or no square selected
 
 

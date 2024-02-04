@@ -12,36 +12,33 @@ import java.util.Arrays;
 @Service
 public class ShotService {
 
-    public Game shoot(Game game, Point shotLocation) {
-
-        Shot shot = takeShot(game, shotLocation);
-
-        isGameOver(game);
-
-        return game;
-
-
-    }
-
-    public Shot takeShot(Game game, Point shotLocation) {
+    public Game takeShot(Game game, Point shotLocation) {
+        Battleship hitBattleship = null;
         boolean isHit = false;
-        GameBoard defensiveGameBoard = game.getGameBoards()[1];
+        int defensiveIndex = (game.getTurn()+1) % 2;
+        GameBoard defensiveGameBoard = game.getGameBoards()[defensiveIndex];
         for (Battleship b : defensiveGameBoard.getBattleships()) {
             int index = b.body.indexOf(shotLocation);
             if (index != -1) {
                 isHit = true;
                 b.hits[index] = true;
+                hitBattleship = b;
             }
         }
 
         Shot shot = new Shot(shotLocation, isHit);
         defensiveGameBoard.shots.add(shot);
 
-        return shot;
+        if(defensiveGameBoard.isGameOver(game)) {
+            game.setWinner(game.getPlayers()[game.getTurn()]);
+            // end game
+        } else {
+            game.setTurn(defensiveIndex);
+        }
+
+
+        return game;
     }
 
-    public boolean isGameOver(Game game) {
-        GameBoard defensiveGameBoard = game.getGameBoards()[1];
-        return Arrays.stream(defensiveGameBoard.getBattleships()).allMatch(Battleship::isDestroyed);
-    }
+
 }

@@ -7,6 +7,7 @@ import router.potato.BattleshipsOnline.enumeration.GameState;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class Game {
@@ -14,14 +15,14 @@ public class Game {
     @Id
     private String gameId;
     private GameBoard[] gameBoards;
-    private Player player1;
-    private Player player2;
-    private String winner;
+    private Player[] players;
+    private Player winner;
     private int turn;
     private GameState gameState;
 
     public Game() {
         this.gameBoards = new GameBoard[]{new GameBoard(), new GameBoard()};
+        this.players = new Player[2];
         this.turn = 0;
     }
 
@@ -41,27 +42,19 @@ public class Game {
         this.gameBoards = gameBoards;
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public Player[] getPlayers() {
+        return players;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
+    public void setPlayers(Player[] players) {
+        this.players = players;
     }
 
-    public Player getPlayer2() {
-        return player2;
-    }
-
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
-    }
-
-    public String getWinner() {
+    public Player getWinner() {
         return winner;
     }
 
-    public void setWinner(String winner) {
+    public void setWinner(Player winner) {
         this.winner = winner;
     }
 
@@ -85,10 +78,9 @@ public class Game {
     public String toString() {
         return "Game{" +
                 "gameId='" + gameId + '\'' +
-                ", gameBoards=" + gameBoards +
-                ", player1=" + player1 +
-                ", player2=" + player2 +
-                ", winner='" + winner + '\'' +
+                ", gameBoards=" + Arrays.toString(gameBoards) +
+                ", players=" + Arrays.toString(players) +
+                ", winner=" + winner +
                 ", turn=" + turn +
                 ", gameState=" + gameState +
                 '}';

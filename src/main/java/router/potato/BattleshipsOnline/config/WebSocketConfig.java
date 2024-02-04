@@ -11,14 +11,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/battleships/lobby").withSockJS(); //http url endpoint client needs to connect to for handshake
+    public void configureMessageBroker(final MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/ws");
     }
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-
-        config.setApplicationDestinationPrefixes("/app");
-        config.enableSimpleBroker("/topic");
+    public void registerStompEndpoints(final StompEndpointRegistry registry) {
+        registry.addEndpoint("/battleships/lobby").withSockJS(); //http url endpoint client needs to connect to for handshake
     }
 }

@@ -23,25 +23,11 @@ public class GameBoard {
         for (int[] row : board) {
             Arrays.fill(row, 0);
         }
-
     }
 
-    public Battleship takeShot(Point shotLocation) {
-        Battleship hitBattleship = null;
-        boolean isHit = false;
-        for (Battleship b : this.battleships) {
-            int index = b.body.indexOf(shotLocation);
-            if (index != -1) {
-                isHit = true;
-                b.hits[index] = true;
-                hitBattleship = b;
-            }
-        }
-        this.shots.add(new Shot(shotLocation, isHit));
-
-        return hitBattleship;
+    public boolean isGameOver(Game game) {
+        return Arrays.stream(battleships).allMatch(Battleship::isDestroyed);
     }
-
 
     public Battleship[] getBattleships() {
         return battleships;
@@ -55,6 +41,7 @@ public class GameBoard {
             }
         }
     }
+
 
     public int[][] getBoard() {
         return board;

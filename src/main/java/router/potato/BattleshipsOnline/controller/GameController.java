@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import router.potato.BattleshipsOnline.dto.ConnectRequest;
@@ -14,15 +15,17 @@ import router.potato.BattleshipsOnline.service.ShipService;
 
 import java.util.ArrayList;
 
-@RestController
+@Controller
 @RequestMapping("/battleships")
 public class GameController {
 
     private final GameService gameService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public GameController(GameService theGameService) {
+    public GameController(GameService theGameService, SimpMessagingTemplate theSimpMessagingTemplate) {
         gameService = theGameService;
+        simpMessagingTemplate = theSimpMessagingTemplate;
     }
 
     @PostMapping("/create")
@@ -37,20 +40,30 @@ public class GameController {
         System.out.println("connect request: " + connectRequest);
         System.out.println("Player: " + connectRequest.getPlayer());
         System.out.println("Game Id: " + connectRequest.getGameId());
-        return ResponseEntity.ok(gameService.connectToGame(connectRequest.getPlayer(), connectRequest.getGameId()));
+
+        Game game = gameService.connectToGame(connectRequest.getPlayer(), connectRequest.getGameId());
+
+        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + connectRequest.getGameId(), game);
+        return ResponseEntity.ok(game);
 
     }
 
     @PostMapping("/place")
     public ResponseEntity<Game> placeShips(@RequestBody PlaceBattleshipRequest placeRequest) {
 
-        return ResponseEntity.ok(gameService.placeShips(placeRequest));
+        Game game = gameService.placeShips(placeRequest);
+
+        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + placeRequest.getGameId(), game);
+        return ResponseEntity.ok(game);
     }
 
     @PostMapping("/shoot")
     public ResponseEntity<Game> shoot(@RequestBody Shot shot) {
 
-        return ResponseEntity.ok(gameService.shoot(shot));
+        Game game = gameService.shoot(shot);
+
+        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + shot.getGameId(), game);
+        return ResponseEntity.ok(game);
     }
 
 }
