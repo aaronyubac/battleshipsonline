@@ -1,7 +1,5 @@
 var width = 10;
 var playerSquares = new Array();
-var enemySquares = new Array();
-
 
 const shipsArray = [
     {
@@ -45,19 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const ships = document.querySelectorAll('.ship');
     const shipsContainer = document.querySelector(".ships-container");
     playerBoard = document.getElementById('playerBoard');
-    enemyBoard = document.getElementById('enemyBoard');
-    renderBoard(playerBoard);
-    renderBoard(enemyBoard);
+    renderBoard(playerBoard, playerSquares);
 
 shipsContainer.addEventListener('click', e => {
-    if(e.target.parentElement.matches('div.ship')) {
-        rotate(e.target.parentElement);
-        }
-    });
+    if(e.target.parentElement.matches('div.ship')) {rotate(e.target.parentElement);}});
 
-    shipsContainer.addEventListener('mousedown', e => {
-        grabShip(e, target);
-    })
+    shipsContainer.addEventListener('mousedown', e => grabShip(e, target));
 
     ships.forEach(ship => ship.addEventListener('dragstart', e => {dragStart(e, target)}));
         playerBoard.addEventListener('dragover', dragOver);
@@ -68,25 +59,13 @@ shipsContainer.addEventListener('click', e => {
     document.getElementById("resetBtn").addEventListener("click", e => reset(e, shipsContainer));
 });
 
-function renderBoard(board) {
-    for (let i = 0; i < 100; i++) {
-        const square = document.createElement('div');
-        square.classList.add('square');
-        square.dataset.id = i;
-        board.appendChild(square);
-        playerSquares.push(square);
-    }
-}
-
-    const target = {
-        shipNameWithId:'',
-        ship:'',
-        shipLength: 0
-    }
+const target = {
+    shipNameWithId:'',
+    ship:'',
+    shipLength: 0
+    };
 
 function rotate(ship){
-    console.log(ship)
-    console.log(ship.classList[1])
     ship.classList.toggle(`${ship.classList[1]}-vertical`)
 }
 
@@ -107,15 +86,6 @@ function placeShip(e, target, container) {
     let receivingSquare = parseInt(e.target.dataset.id);
     let droppedShipFirstId = receivingSquare - draggedShipIndex;
     let droppedShipLastId = receivingSquare + draggedShipLastIndex - draggedShipIndex;
-
-//console.log(target);
-//    console.log("draggedShipWithLastId: " + draggedShipWithLastId);
-//    console.log("draggedShipClass: " + draggedShipClass);
-//    console.log("draggedShipLastIndex: " + draggedShipLastIndex);
-//    console.log("draggedShipIndex: " + draggedShipIndex);
-//    console.log("receivingSquare: " + receivingSquare);
-//    console.log("droppedShipFirstId: " + droppedShipFirstId);
-//    console.log("droppedShipLastId: " + droppedShipLastId);
 
     let isVertical = [...target.ship.classList].some(className => className.includes('vertical'));
 
@@ -151,7 +121,7 @@ function placeShip(e, target, container) {
     $("." + draggedShipClass).first().data("isVertical", isVertical);
 
     if(!container.querySelector('.ship')) {
-        document.getElementById("confirmBattleshipsBtn").style.visibility = "visible";
+        $('#confirmBattleshipsBtn').css("visibility", "visible");
     }
     }
 function dragOver(e){
@@ -203,7 +173,10 @@ function confirmShips() {
             }),
             success: function(data) {
                 console.log(data);
-                if (data.player1.ready && data.player2.ready) {
+                if (data.players[0].ready && data.players[1].ready) {
+                    // get data turn (0 or 1)
+                    // use global variable playerType
+                    // if turn then shoot button available
                     startGame(data);
                 }
                 refreshGameBoard(data);
@@ -256,7 +229,7 @@ function reset (e,shipsContainer) {
           <div id="carrier-4"></div>
         </div>`;
 
-        ships = document.querySelectorAll('.ship');
+        ships = $('.ship');
         ships.forEach(ship => ship.addEventListener('dragstart', e => {dragStart(e, target)}));
 
 
@@ -264,7 +237,7 @@ function reset (e,shipsContainer) {
 
 // when both ships confirmed player 1 can take shot (ready functionality)
 function startGame(data) {
-    
+
 }
 // have take shot button gray out when its not their turn or no square selected
 

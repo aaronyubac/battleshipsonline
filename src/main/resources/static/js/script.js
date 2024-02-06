@@ -1,15 +1,30 @@
+function renderBoard(board, squares) {
+    for (let i = 0; i < 100; i++) {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.dataset.id = i;
+        board.appendChild(square);
+        squares.push(square);
+    }
+}
+
+
+
 function refreshGameBoard(data) {
 // gameboards
     // loop through board[][] and refresh based on value (0-water, 1-ship, 2-shot-hit, 3-shot-miss)
     // really need shot hit or shot miss
-// game id
     $('#gameIdFinal').replaceWith(data.gameId);
-// player 1
-    $('#playerOne').replaceWith(data.player1.name);
-// player 2
-    $('#playerTwo').replaceWith(data.player2.name);
-// turn
-    $('#turnDisplay').replaceWith(data.turn == 0 ? data.player1.name : data.player2.name);
+    $('#playerOne').replaceWith(data.players[0].name);
+
+    try {
+        if(data.players[1]!=null){ $('#playerTwo').replaceWith(data.players[1].name); }
+    // turn (might have to change to .html)
+        $('#turnDisplay').replaceWith(data.turn == 0 ? data.players[0].name : data.players[2].name);
+    } catch (err) {
+        console.log(err);
+    }
+
 // winner
 // game state
     // if game state is done show winner

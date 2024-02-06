@@ -9,6 +9,8 @@
 #confirmBattleshipsBtn {
     visibility: hidden;
 }
+
+
 .board {
      width 400px;
      height: 400px;
@@ -23,6 +25,10 @@
       border-style: solid;
       border-color: black;
       color: #fff;
+}
+
+.square:hover {
+    filter: brightness(150%);
 }
 
 .ship{

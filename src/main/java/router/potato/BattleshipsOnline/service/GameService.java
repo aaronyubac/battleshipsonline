@@ -28,7 +28,7 @@ public class GameService {
     public Game createGame(Player player) {
         Game game = new Game();
         game.setGameId(UUID.randomUUID().toString());
-        game.setPlayer1(player);
+        game.getPlayers()[0] = player;
 
         gameRepository.save(game);
 
