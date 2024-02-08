@@ -3,6 +3,7 @@ package router.potato.BattleshipsOnline.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import router.potato.BattleshipsOnline.dto.PlaceBattleshipRequest;
+import router.potato.BattleshipsOnline.dto.ShotRequest;
 import router.potato.BattleshipsOnline.model.*;
 import router.potato.BattleshipsOnline.repository.GameRepository;
 
@@ -69,13 +70,13 @@ public class GameService {
         return gameShipsPlaced;
     }
 
-    public Game shoot(Shot shot) {
-        Optional<Game> optionalGame = gameRepository.findById(shot.getGameId());
+    public Game shoot(ShotRequest shotRequest) {
+        Optional<Game> optionalGame = gameRepository.findById(shotRequest.getGameId());
 
         optionalGame.orElseThrow(() -> new RuntimeException("Game with provided id doesn't exist"));
         Game game = optionalGame.get();
 
-        Game gamePostShot = shotService.takeShot(game, shot.getLocation());
+        Game gamePostShot = shotService.takeShot(game, shotRequest.getShot().getLocation());
         gameRepository.save(gamePostShot);
 
         return gamePostShot;

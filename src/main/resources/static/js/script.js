@@ -16,13 +16,14 @@ function refreshGameBoard(data) {
     // really need shot hit or shot miss
     $('#gameIdFinal').replaceWith(data.gameId);
     $('#playerOne').replaceWith(data.players[0].name);
+    if(data.players[1]!=null){ $('#playerTwo').replaceWith(data.players[1].name); }
 
-    try {
-        if(data.players[1]!=null){ $('#playerTwo').replaceWith(data.players[1].name); }
-    // turn (might have to change to .html)
-        $('#turnDisplay').replaceWith(data.turn == 0 ? data.players[0].name : data.players[2].name);
-    } catch (err) {
-        console.log(err);
+
+    $('#turnDisplay').html(data.turn == 0 ? data.players[0].name : data.players[1].name);
+    if (data.turn == 0 && playerType === "FIRST_PLAYER") {
+        $('#takeShotBtn').css("visibility", "visible");
+    } else if (data.turn == 1 && playerType === "SECOND_PLAYER"){
+        $('#takeShotBtn').css("visibility", "visible");
     }
 
 // winner

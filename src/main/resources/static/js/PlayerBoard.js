@@ -173,12 +173,12 @@ function confirmShips() {
             }),
             success: function(data) {
                 console.log(data);
-                if (data.players[0].ready && data.players[1].ready) {
-                    // get data turn (0 or 1)
-                    // use global variable playerType
-                    // if turn then shoot button available
-                    startGame(data);
-                }
+//                if (data.players[0].ready && data.players[1].ready) {
+//                    // get data turn (0 or 1)
+//                    // use global variable playerType
+//                    // if turn then shoot button available
+//                    startGame(data);
+//                }
                 refreshGameBoard(data);
             },
             error: function(error) {
@@ -236,9 +236,9 @@ function reset (e,shipsContainer) {
 }
 
 // when both ships confirmed player 1 can take shot (ready functionality)
-function startGame(data) {
-
-}
+//function startGame(data) {
+//
+//}
 // have take shot button gray out when its not their turn or no square selected
 
 

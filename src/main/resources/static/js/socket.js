@@ -75,7 +75,7 @@ function connectToGame() {
             gameId = data.gameId;
             playerType = 'SECOND_PLAYER';
             connectToSocket(gameId);
-            alert("You are now playing with: " + data.player1.name);
+            alert("You are now playing with: " + data.players[0].name);
             refreshGameBoard(data);
         },
       error: function (error) {

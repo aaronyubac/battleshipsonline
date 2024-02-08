@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import router.potato.BattleshipsOnline.dto.ConnectRequest;
 import router.potato.BattleshipsOnline.dto.PlaceBattleshipRequest;
+import router.potato.BattleshipsOnline.dto.ShotRequest;
 import router.potato.BattleshipsOnline.model.*;
 import router.potato.BattleshipsOnline.service.GameService;
 import router.potato.BattleshipsOnline.service.ShipService;
@@ -58,11 +59,11 @@ public class GameController {
     }
 
     @PostMapping("/shoot")
-    public ResponseEntity<Game> shoot(@RequestBody Shot shot) {
+    public ResponseEntity<Game> shoot(@RequestBody ShotRequest shotRequest) {
 
-        Game game = gameService.shoot(shot);
+        Game game = gameService.shoot(shotRequest);
 
-        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + shot.getGameId(), game);
+        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + shotRequest.getGameId(), game);
         return ResponseEntity.ok(game);
     }
 
