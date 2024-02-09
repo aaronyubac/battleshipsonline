@@ -77,9 +77,10 @@ public class GameService {
         Game game = optionalGame.get();
 
         Game gamePostShot = shotService.takeShot(game, shotRequest.getShot().getLocation());
+
         gameRepository.save(gamePostShot);
 
-        return gamePostShot;
+        return game;
     }
 
 }

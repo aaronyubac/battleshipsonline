@@ -2,12 +2,8 @@ package router.potato.BattleshipsOnline.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
-import router.potato.BattleshipsOnline.enumeration.GameState;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class Game {
@@ -18,7 +14,7 @@ public class Game {
     private Player[] players;
     private Player winner;
     private int turn;
-    private GameState gameState;
+    private Event event;
 
     public Game() {
         this.gameBoards = new GameBoard[]{new GameBoard(), new GameBoard()};
@@ -66,12 +62,12 @@ public class Game {
         this.turn = turn;
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
@@ -82,7 +78,7 @@ public class Game {
                 ", players=" + Arrays.toString(players) +
                 ", winner=" + winner +
                 ", turn=" + turn +
-                ", gameState=" + gameState +
+                ", event=" + event +
                 '}';
     }
 }

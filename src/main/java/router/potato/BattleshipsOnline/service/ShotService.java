@@ -2,6 +2,7 @@ package router.potato.BattleshipsOnline.service;
 
 import org.springframework.stereotype.Service;
 import router.potato.BattleshipsOnline.model.Battleship;
+import router.potato.BattleshipsOnline.model.Event;
 import router.potato.BattleshipsOnline.model.Game;
 import router.potato.BattleshipsOnline.model.GameBoard;
 import router.potato.BattleshipsOnline.model.Shot;
@@ -26,12 +27,20 @@ public class ShotService {
             }
         }
 
+        if (hitBattleship == null) {
+            game.setEvent(Event.MISS);
+        } else if(hitBattleship.isDestroyed()) {
+            game.setEvent(Event.BATTLESHIP_DESTROYED);
+        } else {
+            game.setEvent(Event.BATTLESHIP_HIT);
+        }
+
         Shot shot = new Shot(shotLocation, isHit);
         defensiveGameBoard.shots.add(shot);
 
         if(defensiveGameBoard.isGameOver(game)) {
             game.setWinner(game.getPlayers()[game.getTurn()]);
-            // end game
+            game.setEvent(Event.GAME_OVER);
         } else {
             game.setTurn(defensiveIndex);
         }

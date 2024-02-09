@@ -23,10 +23,6 @@ function select(e) {
     $('#selected').html('(' + selectedSquare.x + ',' + selectedSquare.y + ')');
 }
 
-
-
-// take shot
-    // send selectedSquare via ajax
 function takeShot() {
     $.ajax({
         url: url + "/battleships/shoot",
@@ -34,12 +30,12 @@ function takeShot() {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-            "shot": {"x": selectedSquare.x, "y": selectedSquare.y},
+            "shot": {"location":{"x": selectedSquare.x, "y": selectedSquare.y}, "isHit": false},
             "gameId": gameId
         }),
         success: function (data) {
-            alert("You took a shot");
             refreshGameBoard(data);
+
         },
         error: function(error) {
             console.log(error);
@@ -47,6 +43,7 @@ function takeShot() {
     });
 }
 
+// have selected square remain bright
+// if shot already taken there can't shoot there again
 // gray for miss
 // red for hit
-// if is destroyed -> announce
