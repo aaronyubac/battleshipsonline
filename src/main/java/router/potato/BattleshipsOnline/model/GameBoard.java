@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class GameBoard {
 
-    int[][] board;
     int length = 10;
     int width = 10;
     boolean showBattleships;
@@ -17,12 +16,8 @@ public class GameBoard {
     public Set<Shot> shots = new HashSet<>();
 
 
-//    (0-water, 1-ship, 2-shot-hit, 3-shot-miss)
+
     public GameBoard() {
-        board = new int[length][width];
-        for (int[] row : board) {
-            Arrays.fill(row, 0);
-        }
     }
 
     public boolean isGameOver(Game game) {
@@ -35,20 +30,7 @@ public class GameBoard {
 
     public void setBattleships(Battleship[] battleships) {
         this.battleships = battleships;
-        for (Battleship b : battleships) {
-            for (Point p : b.body) {
-                board[p.y][p.x] = 1;
-            }
-        }
-    }
 
-
-    public int[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(int[][] board) {
-        this.board = board;
     }
 
     public Set<Shot> getShots() {

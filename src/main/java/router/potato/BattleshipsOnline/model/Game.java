@@ -3,7 +3,10 @@ package router.potato.BattleshipsOnline.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+import java.util.AbstractMap;
 import java.util.Arrays;
+
 
 @Component
 public class Game {
@@ -15,6 +18,7 @@ public class Game {
     private Player winner;
     private int turn;
     private Event event;
+    private Shot latestShot;
 
     public Game() {
         this.gameBoards = new GameBoard[]{new GameBoard(), new GameBoard()};
@@ -62,6 +66,14 @@ public class Game {
         this.turn = turn;
     }
 
+    public Shot getLatestShot() {
+        return latestShot;
+    }
+
+    public void setLatestShot(Shot latestShot) {
+        this.latestShot = latestShot;
+    }
+
     public Event getEvent() {
         return event;
     }
@@ -79,6 +91,7 @@ public class Game {
                 ", winner=" + winner +
                 ", turn=" + turn +
                 ", event=" + event +
+                ", latestShot=" + latestShot +
                 '}';
     }
 }

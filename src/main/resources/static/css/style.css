@@ -34,10 +34,6 @@
       color: #fff;
 }
 
-.square:hover {
-    filter: brightness(150%);
-}
-
 .ship{
     background-color: whitesmoke;
 }
@@ -47,6 +43,27 @@
     height: 40px;
     border-style: solid;
     border-color: black;
+}
+
+.miss {
+    filter: brightness(20%);
+}
+
+.hit {
+    background-color: #D30000;
+}
+
+.destroyed {
+    background-color: #800000;
+}
+
+
+.square:hover {
+    filter: brightness(150%);
+}
+
+.selected {
+    filter: brightness(150%);
 }
 
 .ships-container{

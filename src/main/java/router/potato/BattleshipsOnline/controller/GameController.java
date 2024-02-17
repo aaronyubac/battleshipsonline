@@ -1,6 +1,7 @@
 package router.potato.BattleshipsOnline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,7 +16,9 @@ import router.potato.BattleshipsOnline.service.GameService;
 import router.potato.BattleshipsOnline.service.ShipService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+@CrossOrigin(origins = "http://192.168.0.133:8080/battleships")
 @Controller
 @RequestMapping("/battleships")
 public class GameController {
@@ -23,7 +26,6 @@ public class GameController {
     private final GameService gameService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @Autowired
     public GameController(GameService theGameService, SimpMessagingTemplate theSimpMessagingTemplate) {
         gameService = theGameService;
         simpMessagingTemplate = theSimpMessagingTemplate;
@@ -51,6 +53,10 @@ public class GameController {
 
     @PostMapping("/place")
     public ResponseEntity<Game> placeShips(@RequestBody PlaceBattleshipRequest placeRequest) {
+
+        System.out.println("heads: " + Arrays.toString(placeRequest.getHeads()));
+        System.out.println("tails: " + Arrays.toString(placeRequest.getTails()));
+        System.out.println("isVerticals: " + Arrays.toString(placeRequest.getIsVerticals()));
 
         Game game = gameService.placeShips(placeRequest);
 

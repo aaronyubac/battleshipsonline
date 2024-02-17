@@ -8,6 +8,7 @@ import router.potato.BattleshipsOnline.model.GameBoard;
 import router.potato.BattleshipsOnline.model.Shot;
 
 import java.awt.*;
+import java.util.AbstractMap;
 import java.util.Arrays;
 
 @Service
@@ -18,6 +19,7 @@ public class ShotService {
         boolean isHit = false;
         int defensiveIndex = (game.getTurn()+1) % 2;
         GameBoard defensiveGameBoard = game.getGameBoards()[defensiveIndex];
+
         for (Battleship b : defensiveGameBoard.getBattleships()) {
             int index = b.body.indexOf(shotLocation);
             if (index != -1) {
@@ -36,15 +38,17 @@ public class ShotService {
         }
 
         Shot shot = new Shot(shotLocation, isHit);
-        defensiveGameBoard.shots.add(shot);
+        game.setLatestShot(shot);
+        defensiveGameBoard.shots.add(shot); // might not need
 
         if(defensiveGameBoard.isGameOver(game)) {
             game.setWinner(game.getPlayers()[game.getTurn()]);
             game.setEvent(Event.GAME_OVER);
+
+            System.out.printf("%s is over: %s won the game", game.getGameId(), game.getWinner().getName());
         } else {
             game.setTurn(defensiveIndex);
         }
-
 
         return game;
     }

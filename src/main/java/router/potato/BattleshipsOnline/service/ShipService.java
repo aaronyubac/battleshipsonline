@@ -21,9 +21,7 @@ public class ShipService {
         for (int i = 0; i < battleships.length; i++) {
             battleships[i] = Battleship.build(placeRequest.getHeads()[i], placeRequest.getTails()[i], placeRequest.getIsVerticals()[i]);
         }
-
         gameBoard.setBattleships(battleships);
-
 
         return game;
     }

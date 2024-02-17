@@ -8,15 +8,10 @@ function renderBoard(board, squares) {
     }
 }
 
-
-
 function refreshGameBoard(data) {
-// gameboards
-    // loop through board[][] and refresh based on value (0-water, 1-ship, 2-shot-hit, 3-shot-miss)
-    // really need shot hit or shot miss
     $('#gameIdDisplay').html(data.gameId);
     $('#playerOne').html(data.players[0].name);
-    if(data.players[1]!=null){ $('#playerTwo').html(data.players[1].name); }
+    if(data.players[1]!=null){ $('#playerTwo').html(data.players[1].name);
 
 
     if (data.players[0].ready && data.players[1].ready) {
@@ -31,25 +26,55 @@ function refreshGameBoard(data) {
         } else if (turn == 1 && playerType === "SECOND_PLAYER"){
             $('#takeShotBtn').css("visibility", "visible");
         }
+        shooterIndex = (turn+1) % 2;
+        shooter = data.players[shooterIndex];
+        latestShotLocation = data.latestShot.location;
+        shotIndex = (latestShotLocation.y * 10) + latestShotLocation.x;
     }
 
-    shooter = data.players[(turn+1)%2].name;
 
     switch (data.event)  {
         case "MISS":
-            $("#eventContainer").html(shooter + " missed");
+            $("#eventContainer").html(shooter.name + " missed");
+            if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
+                enemySquares[shotIndex].classList.add('miss');
+            } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
+                playerSquares[shotIndex].classList.add('miss');
+            }
+
             break;
         case "BATTLESHIP_DESTROYED":
-            $("#eventContainer").html(shooter + " destroyed a battleship");
+            $("#eventContainer").html(shooter.name + " destroyed a battleship");
+            if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
+                enemySquares[shotIndex].classList.add('destroyed');
+            } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
+                playerSquares[shotIndex].classList.add('destroyed');
+            }
             break;
         case "BATTLESHIP_HIT":
-            $("#eventContainer").html(shooter + " hit a battleship");
+            $("#eventContainer").html(shooter.name + " hit a battleship");
+            if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
+                enemySquares[shotIndex].classList.add('hit');
+            } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
+                playerSquares[shotIndex].classList.add('hit');
+            }
             break;
         case "GAME_OVER":
-            $("#eventContainer").html(winner + " won the game");
+            $("#eventContainer").html(data.winner.name + " won the game");
+
+            if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
+                enemySquares[shotIndex].classList.add('destroyed');
+            } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
+                enemySquares[shotIndex].classList.add('destroyed');
+            }
+
+
+            // screen darked out
+            // all battleships revealed
             break;
         default:
             $("#eventContainer").html("");
+    }
     }
 
 }

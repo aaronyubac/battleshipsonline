@@ -7,7 +7,6 @@ public class Shot {
     Point location;
     boolean isHit;
 
-
     public Shot() {
     }
 
@@ -15,7 +14,6 @@ public class Shot {
         this.location = location;
         this.isHit = isHit;
     }
-
 
     public Point getLocation() {
         return location;

@@ -1,4 +1,4 @@
-var enemySquares = new Array();
+enemySquares = new Array();
 
 document.addEventListener("DOMContentLoaded", () => {
     enemyBoard = document.getElementById('enemyBoard');
@@ -24,6 +24,10 @@ function select(e) {
 }
 
 function takeShot() {
+// ***************TO DO***********************
+//    if (// selected square index does not contain miss hit or destroyed blah) {
+
+//    }
     $.ajax({
         url: url + "/battleships/shoot",
         type: 'POST',
