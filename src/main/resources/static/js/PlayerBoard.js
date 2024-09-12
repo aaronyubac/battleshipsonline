@@ -83,7 +83,6 @@ function placeShip(e, target, container) {
     let isVertical = [...target.ship.classList].some(className => className.includes('vertical'));
 
     let shipLength = target.shipLength;
-    console.log(shipLength);
     let draggedShipWithLastId = target.ship.lastElementChild.id;
     let draggedShipClass = draggedShipWithLastId.slice(0, -2);
     let draggedShipLastIndex = parseInt(draggedShipWithLastId.slice(-1));
@@ -221,7 +220,6 @@ function confirmShips() {
 }
 
 
-// fix*****************************
 function reset (e,shipsContainer) {
 
     playerSquares.forEach(square => {

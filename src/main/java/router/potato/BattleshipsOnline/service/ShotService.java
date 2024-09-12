@@ -46,9 +46,10 @@ public class ShotService {
             game.setEvent(Event.GAME_OVER);
 
             System.out.printf("%s is over: %s won the game", game.getGameId(), game.getWinner().getName());
-        } else {
-            game.setTurn(defensiveIndex);
         }
+
+        game.setTurn(defensiveIndex);
+
 
         return game;
     }

@@ -46,9 +46,9 @@ function refreshGameBoard(data) {
         case "BATTLESHIP_DESTROYED":
             $("#eventContainer").html(shooter.name + " destroyed a battleship");
             if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
-                enemySquares[shotIndex].classList.add('destroyed');
+                shipDestroyed(data, enemySquares);
             } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
-                playerSquares[shotIndex].classList.add('destroyed');
+                shipDestroyed(data, playerSquares);
             }
             break;
         case "BATTLESHIP_HIT":
@@ -61,20 +61,30 @@ function refreshGameBoard(data) {
             break;
         case "GAME_OVER":
             $("#eventContainer").html(data.winner.name + " won the game");
+            $('#takeShotBtn').css("visibility", "hidden");
 
             if ((playerType === "FIRST_PLAYER" && shooterIndex == 0) || (playerType === "SECOND_PLAYER" && shooterIndex == 1)) {
-                enemySquares[shotIndex].classList.add('destroyed');
+                shipDestroyed(data, enemySquares);
             } else if ((playerType === "FIRST_PLAYER" && shooterIndex == 1) || (playerType === "SECOND_PLAYER" && shooterIndex == 0)) {
-                enemySquares[shotIndex].classList.add('destroyed');
+                shipDestroyed(data, playerSquares);
             }
 
 
             // screen darked out
-            // all battleships revealed
             break;
         default:
             $("#eventContainer").html("");
     }
-    }
+}
 
+}
+
+function shipDestroyed(data, squares) {
+    data.gameBoards[data.turn].battleships.forEach(ship => {
+        if (ship.destroyed == true) {
+            ship.body.forEach(index => {
+                squares[(index.y*10) + index.x].classList.add('destroyed')
+            });
+        }
+    });
 }
